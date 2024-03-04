@@ -4,12 +4,12 @@ open BepInEx.Configuration
 open FSharpPlus
 open System
 open System.IO
-open System.Runtime.Serialization.Formatters.Binary
 open Unity.Collections
 open Unity.Netcode
 open Mirage.PluginInfo
 open Mirage.Core.Field
 open Mirage.Core.Logger
+open System.Runtime.Serialization
 
 /// <summary>
 /// Local preferences managed by BepInEx.
@@ -393,23 +393,31 @@ let initConfig (file: ConfigFile) =
     }
 
 let private serializeToBytes<'A> (value: 'A) : array<byte> =
-    let formatter = new BinaryFormatter()
+    let serializer = new DataContractSerializer(typeof<'A>)
     use stream = new MemoryStream()
     try
-        formatter.Serialize(stream, value)
+        serializer.WriteObject(stream, value)
         stream.ToArray()
     with | error ->
         logError $"Failed to serialize value: {error}"
         null
 
 let private deserializeFromBytes<'A> (data: array<byte>) : 'A =
-    let formatter = new BinaryFormatter()
+    let serializer = new DataContractSerializer(typeof<'A>)
     use stream = new MemoryStream(data)
     try
-        formatter.Deserialize stream :?> 'A
+        serializer.ReadObject stream :?> 'A
     with | error ->
         logError $"Failed to deserialize bytes: {error}"
         Unchecked.defaultof<'A>
+
+let private sendMessage action (clientId: uint64) (stream: FastBufferWriter) =
+    let MaxBufferSize = 1300
+    let delivery =
+        if stream.Capacity > MaxBufferSize
+            then NetworkDelivery.ReliableFragmentedSequenced
+            else NetworkDelivery.Reliable
+    messageManager().SendNamedMessage(toNamedMessage action, clientId, stream, delivery)
 
 /// <summary>
 /// Revert the synchronized config and use the default values.
@@ -422,9 +430,9 @@ let revertSync () = setNone SyncedConfig
 let requestSync () =
     if isClient() then
         use stream = new FastBufferWriter(sizeof<int32>, Allocator.Temp) 
-        messageManager().SendNamedMessage(toNamedMessage RequestSync, 0UL, stream)
+        sendMessage RequestSync 0UL stream
 
-let private onRequestSync (clientId: uint64) _ =
+let private onRequestSync clientId _ =
     if isHost() then
         let bytes = serializeToBytes <| getConfig()
         let bytesLength = bytes.Length
@@ -432,7 +440,7 @@ let private onRequestSync (clientId: uint64) _ =
         try
             writer.WriteValueSafe &bytesLength
             writer.WriteBytesSafe bytes
-            messageManager().SendNamedMessage(toNamedMessage ReceiveSync, clientId, writer)
+            sendMessage ReceiveSync clientId writer
         with | error ->
             logError $"Failed during onRequestSync: {error}"
 
@@ -453,9 +461,11 @@ let private onReceiveSync _ (reader: FastBufferReader) =
 /// <summary>
 /// Register the named message handler for the given action.
 /// </summary>
-let internal registerHandler (action: SyncAction) =
+let internal registerHandler action =
     let message = toNamedMessage action
     let register handler = messageManager().RegisterNamedMessageHandler(message, handler)
-    match action with
-        | RequestSync -> register onRequestSync
-        | ReceiveSync -> register onReceiveSync
+    let callback =
+        match action with
+            | RequestSync -> onRequestSync
+            | ReceiveSync -> onReceiveSync
+    register callback
