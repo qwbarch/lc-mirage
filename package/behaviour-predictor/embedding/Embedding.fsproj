@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>Embedding</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <ContentWithTargetPath Include="../bertlib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>bertlib.dll</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="../main.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>main.exe</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Embedding.fs" />
+    <ProjectReference Include="../../utilities/src/Utilities.fsproj" />
+    <Reference Include="FSharpPlus">
+      <HintPath>../../../lib/FSharpPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.Control.AsyncSeq">
+      <HintPath>../../../lib/FSharp.Control.AsyncSeq.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharpx.Async">
+        <HintPath>../../../lib/FSharpx.Async.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

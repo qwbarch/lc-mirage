@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>App</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="FSharpPlus" Version="1.5.0" />
+    <ProjectReference Include="../src/Whisper.fsproj" />
+    <ProjectReference Include="../../openai-whisper/src/Whisper.fsproj" />
+    <Reference Include="NAudio">
+      <HintPath>../../../lib/NAudio/NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Core" Publicize="True">
+      <HintPath>../../../lib/NAudio/NAudio.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.WinMM">
+      <HintPath>../../../lib/NAudio/NAudio.WinMM.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Wasapi">
+      <HintPath>../../../lib/NAudio/NAudio.Wasapi.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.fs" />
+  </ItemGroup>
+</Project>

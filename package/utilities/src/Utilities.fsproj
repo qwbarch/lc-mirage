@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>Mirage.Utilities</RootNamespace>
+    <AssemblyName>mirage-utilities</AssemblyName>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="FSharp.Control.AsyncSeq" Version="3.2.1" />
+    <Reference Include="FSharpx.Async">
+      <HintPath>../../../lib/FSharpx.Async.dll</HintPath>
+    </Reference>
+    <PackageReference Include="FSharpPlus" Version="1.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Mirage/Utilities/Async.fs" />
+    <Compile Include="Mirage/Utilities/Lock.fs" />
+    <Compile Include="Mirage/Utilities/MVar.fs" />
+    <Compile Include="Mirage/Utilities/TVar.fs" />
+    <Compile Include="Mirage/Utilities/BatchProcessor.fs" />
+    <Compile Include="Mirage/Utilities/LVar.fs" />
+    <Compile Include="Mirage/Utilities/Print.fs" />
+    <Compile Include="Mirage/Utilities/AtomicFile.fs" />
+  </ItemGroup>
+</Project>

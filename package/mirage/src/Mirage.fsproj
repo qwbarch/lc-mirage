@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Evaisa.NetcodePatcher.MSBuild" Version="3.*" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <NetcodePatch Include="$(TargetPath)" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>Mirage</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all" />
+    <PackageReference Include="LethalCompany.GameLibs.Steam" Version="49.0.0-alpha.1" Publicize="true" />
+    <PackageReference Include="FSharpPlus" Version="1.5.0" />
+    <PackageReference Include="HarmonyX" Version="2.12.0" />
+    <PackageReference Include="FSharp.Control.AsyncSeq" Version="3.2.1" />
+    <PackageReference Include="UniTask" Version="2.5.0" />
+    <Reference Include="FSharpx.Async">
+      <HintPath>../../../lib/FSharpx.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>../../../lib/BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio">
+      <HintPath>../../../lib/NAudio/NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Core" Publicize="True">
+      <HintPath>../../../lib/NAudio/NAudio.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.WinMM">
+      <HintPath>../../../lib/NAudio/NAudio.WinMM.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Lame">
+      <HintPath>../../../lib/NAudio.Lame/NAudio.Lame.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Mirage/PluginInfo.fs" />
+    <Compile Include="Mirage/Core/Monad.fs" />
+    <Compile Include="Mirage/Core/Logger.fs" />
+    <Compile Include="Mirage/Core/Field.fs" />
+    <Compile Include="Mirage/Core/Config.fs" />
+    <Compile Include="Mirage/Core/Audio/Data.fs" />
+    <Compile Include="Mirage/Core/Audio/Format.fs" />
+    <Compile Include="Mirage/Core/Audio/Recording.fs" />
+    <Compile Include="Mirage/Core/Audio/Network/Stream.fs" />
+    <Compile Include="Mirage/Unity/Network.fs" />
+    <Compile Include="Mirage/Core/Audio/Network/Receiver.fs" />
+    <Compile Include="Mirage/Core/Audio/Network/Sender.fs" />
+    <Compile Include="Mirage/Unity/AudioStream.fs" />
+    <Compile Include="Mirage/Unity/MimicPlayer.fs" />
+    <Compile Include="Mirage/Unity/MimicVoice.fs" />
+    <Compile Include="Mirage/Patch/RecordAudio.fs" />
+    <Compile Include="Mirage/Patch/RegisterPrefab.fs" />
+    <Compile Include="Mirage/Patch/SyncConfig.fs" />
+    <Compile Include="Mirage/Patch/RemovePenalty.fs" />
+    <Compile Include="Mirage/Patch/SpawnMaskedEnemy.fs" />
+    <Compile Include="Mirage/Netcode.fs" />
+    <Compile Include="Properties/AssemblyInfo.fs" />
+    <Compile Include="Mirage/Plugin.fs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>Whisper</RootNamespace>
+    <AssemblyName>openai-whisper</AssemblyName>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="FSharp.Json" Version="0.4.1" />
+    <ProjectReference Include="../../utilities/src/Utilities.fsproj" />
+    <ContentWithTargetPath Include="../lib/dist/main/main.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>model/whisper-s2t/main.exe</TargetPath>
+    </ContentWithTargetPath>
+    <Content
+      Include="../lib/dist/main/_internal/**/*.*"
+      CopyToOutputDirectory="PreserveNewest"
+      TargetPath="model/whisper-s2t/_internal/%(RecursiveDir)%(Filename)%(Extension)"
+    />
+    <Content
+      Include="../../../model/whisper-base/**/*.*"
+      CopyToOutputDirectory="PreserveNewest"
+      TargetPath="model/whisper-base/%(RecursiveDir)%(Filename)%(Extension)"
+    />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Whisper/API.fs" />
+  </ItemGroup>
+</Project>
