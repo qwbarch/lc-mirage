@@ -49,8 +49,8 @@ type internal LocalConfig(config: ConfigFile) =
         config.Bind<bool>(
             imitateSection,
             "DeleteRecordingsPerRound",
-            true,
-            "Set to true to have recordings deleted in between rounds. Set to false to delete in between games."
+            false,
+            "Set to true to have recordings deleted in between rounds (after pulling the lever). Set to false to delete only delete when closing the game."
         )
     member val IgnoreRecordingsDeletion =
         config.Bind<bool>(
@@ -64,7 +64,7 @@ type internal LocalConfig(config: ConfigFile) =
         config.Bind<bool>(
             imitateSection,
             "MuteLocalPlayerVoice",
-            false,
+            true,
             "If true, you can't hear your own voice from mimicking enemies while you are alive, but others can. When you die and become a spectator, you can hear your voice again.\n"
                 + "If false, you will always be able to hear your own voice from mimicking enemies."
         )
@@ -221,8 +221,8 @@ type internal LocalConfig(config: ConfigFile) =
         config.Bind<bool>(
             "Credits",
             "EnablePenalty",
-            false,
-            "Whether the credits penalty should be applied during the end of a round."
+            true,
+            "Whether the credits penalty should be applied during the end of a round. Set this to true to have the default vanilla behaviour."
         )
     member val EnableNaturalSpawn =
         config.Bind<bool>(

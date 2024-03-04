@@ -1,6 +1,6 @@
 {
     "name": "Mirage",
-    "version_number": "1.0.16",
+    "version_number": "1.1.0",
     "website_url": "https://github.com/qwbarch/lc-mirage",
     "description": "Synced voice mimicking for any enemy (all players hear the same voice). This is a standalone mod and does not require Skinwalkers to work.",
     "dependencies": [

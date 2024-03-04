@@ -48,12 +48,6 @@ type RecordAudio() =
         if getConfig().deleteRecordingsPerRound then
             deleteRecordings()
 
-    [<HarmonyPostfix>]
-    [<HarmonyPatch(typeof<MenuManager>, "Start")>]
-    static member ``delete recording if per-game is enabled``() =
-        if not <| getConfig().deleteRecordingsPerRound then
-            deleteRecordings()
-
     interface IMicrophoneSubscriber with
         member _.ReceiveMicrophoneData(buffer, format) =
             ignore <| monad' {

@@ -1,5 +1,17 @@
 ## Changelog
 
+### 1.1.0
+
+- Rewrote the config syncing logic. Thanks to Owen3H (author of CSync) for their config syncing [implementation](https://gist.github.com/Owen3H/c73e09314ed71b254256cbb15fd8c51e/5f314116ccd2ba3e5a2a38f01cf889dc674f2cfa).
+- ``DeleteRecordingsPerRound`` has been slightly reworked.
+    - Setting this to ``true`` is unchanged (recordings get deleted after the lever is pulled, per round).
+    - Setting this to ``false`` now only deletes when closing the game.
+    - Default value is now set to ``false``.
+- ``MuteLocalPlayerVoice`` is now set to ``true`` as the default.
+- ``EnablePenalty`` is now set to ``true`` as the default.
+    - To clarify, setting this to ``true`` is the vanilla behaviour.
+    - This will likely be removed in a future update, as it's a relic of the past back when Mirage had different goals.
+
 ### 1.0.16
 
 - Fixed a bug that caused the ship teleporter to not work if ``SpawnOnPlayerDeath`` spawned a masked enemy
